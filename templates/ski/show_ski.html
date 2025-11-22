@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+<title>skis</title>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div>
+        <h3>Liste des skis</h3>
+        <a href="/ski/add" class="btn btn-success">+ Ajouter un ski</a>
+    </div>
+
+    {% if skis|length >= 1 %}
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Modele</th>
+                <th>Type de ski</th>
+                <th>Date d'achat</th>
+                <th>État</th>
+                <th>Prix achat</th>
+                <th>Prix location</th>
+                <th>Taille</th>
+                <th>Image</th>
+                <th>Opérations</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ligne in skis %}
+            <tr>
+                <td>{{ ligne.id }}</td>
+                <td>{{ ligne.modeleSki }}</td>
+                <td class="text-danger">{{ ligne.typeSki_id }}</td>
+                <td>{{ ligne.dateAchat }}</td>
+                <td>{{ ligne.etat }}</td>
+                <td>{{ ligne.prixAchat }}</td>
+                <td>{{ ligne.prixLocation }}</td>
+                <td>{{ ligne.taille }}</td>
+                <td>
+                    {{ ligne.image }}
+                    {% if ligne.imageSki %}
+                        <img src="{{ url_for('static', filename='images/' + ligne.imageSki) }}"
+                             alt="image de {{ ligne.modeleSki }}"
+                             style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/no_photo.jpeg') }}"
+                             alt="pas d'image"
+                             style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/ski/edit?id={{ ligne.id }}" class="btn btn-sm btn-warning">Éditer</a>
+                    <a href="/ski/delete?id={{ ligne.id }}" class="btn btn-sm btn-danger">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-secondary text-center mt-4">
+        Aucun ski disponible pour le moment.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

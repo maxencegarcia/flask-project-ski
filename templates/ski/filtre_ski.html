@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+<title>Filtre des Skis</title>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Filtrer les Skis</h2>
+
+
+    <form method="POST" action="/ski/filtre" class="p-4 border rounded bg-light shadow-sm mb-5">
+        <h5>Filtres disponibles</h5>
+            <div>
+                <label for="recherche" class="form-label">Mot-clé :</label>
+                <input type="text" class="form-control" name="recherche" id="recherche" placeholder="mot clés (modele etat etc...)" >
+            </div>
+
+        <div class="mb-3">
+            <label class="form-label">Types de ski :</label>
+            <div class="row">
+                {% for type in types_skis %}
+                    <div>
+                        <input class="form-check-input" type="checkbox" name="typeSki" value="{{ type.id }}" id="type{{ type.id }}">
+                        <label class="form-check-label" for="type{{ type.id }}">{{ type.libelleType }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="prix_min" class="form-label">Prix minimum :</label>
+                <input type="number" class="form-control" name="prix_min" id="prix_min" placeholder="prix min">
+            </div>
+            <div class="col-md-4">
+                <label for="prix_max" class="form-label">Prix maximum :</label>
+                <input type="number" class="form-control" name="prix_max" id="prix_max" placeholder="prix max">
+            </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-success">Appliquer le filtre</button>
+    </form>
+
+
+    <div class="row">
+        {% for ski in skis %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <img src="{{ url_for('static', filename='images/' + ski.imageSki) }}" class="card-img-top" alt="{{ ski.modeleSki }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ ski.modeleSki }}</h5>
+                    <p class="card-text">
+                        Type : {{ ski.typeSki_id }}<br>
+                        Prix : {{ ski.prixAchat }} €<br>
+                        État : {{ ski.etat }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

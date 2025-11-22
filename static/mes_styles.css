@@ -1,0 +1,15 @@
+.requis:not(:placeholder-shown) {
+  background-color: white; /* quand le champ est rempli */
+}
+
+.requis:placeholder-shown {
+  background-color: #e0e0e0; /* gris quand vide */
+}
+
+.deroul:invalid {
+  background-color: #ecc35d; /* gris quand aucune option n'est choisie */
+}
+
+.deroul:valid {
+  background-color: white; /* blanc quand une option est sélectionnée */
+}

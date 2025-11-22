@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+<title>Modifier un type de ski</title>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Modifier un type de ski</h2>
+
+    <form method="post" action="/type-ski/edit" class="border rounded p-4 shadow-sm bg-light">
+        <fieldset>
+            <legend class="fw-bold mb-3">Édition du type d'ski</legend>
+
+            <input type="hidden" name="id" value="{{ type_ski.id }}">
+
+            <div class="mb-3">
+                <label for="libelleType" class="form-label">Libellé :</label>
+                <input id="libelleType" type="text" name="libelleType" class="form-control" value="{{ type_ski.libelleType }}" required>
+            </div>
+
+            <button type="submit" class="btn btn-warning">Modifier</button>
+            <a href="/type-ski/show" class="btn btn-secondary">Annuler</a>
+        </fieldset>
+    </form>
+
+    {% if types_skis %}
+    <hr class="my-4">
+    <h5>Autres types existants :</h5>
+    <select name="type_ski_id" class="form-select w-auto mt-2">
+        {% for type in types_skis %}
+            <option value="{{ type.id }}"
+                {% if type.id == type_ski.id %}selected{% endif %}>
+                {{ type.libelle }}
+            </option>
+        {% endfor %}
+    </select>
+    {% endif %}
+</div>
+{% endblock %}

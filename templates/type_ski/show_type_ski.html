@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+<title>Types d'skis</title>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div>
+        <h3>Liste des types d'skis</h3>
+        <a href="/type-ski/add" class="btn btn-success">+ Ajouter un type</a>
+    </div>
+
+    {% if types_skis|length >= 1 %}
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Libellé</th>
+                <th>Opérations</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ligne in types_skis %}
+            <tr>
+                <td>{{ ligne.id }}</td>
+                <td>{{ ligne.libelleType }}</td>
+                <td>
+                    <a href="/type-ski/edit?id={{ ligne.id }}" class="btn btn-sm btn-warning">Éditer</a>
+                    <a href="/type-ski/delete?id={{ ligne.id }}" class="btn btn-sm btn-danger">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-secondary text-center mt-4">
+        Aucun type de ski disponible.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
